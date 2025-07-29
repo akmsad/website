@@ -2,91 +2,74 @@
 let properties = [
     {
         id: 1,
-        title: "Prime Land in Kathmandu",
-        location: "Kathmandu, Nepal",
-        type: "land",
-        bedrooms: null,
-        bathrooms: null,
-        area: 10,
-        price: 5000000,
+        title: "Modern Downtown Apartment",
+        location: "New York, NY",
+        type: "apartment",
+        bedrooms: 2,
+        bathrooms: 2,
+        area: 1200,
+        price: 750000,
         images: [
-            "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            "https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            "https://images.unsplash.com/photo-1505692952047-1a78307da8f2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
         ],
-        description: "Premium land in prime location of Kathmandu, suitable for commercial or residential purposes.",
+        description: "This stunning modern apartment in the heart of downtown offers breathtaking city views, high-end finishes, and access to premium amenities including a rooftop pool and fitness center.",
         userId: 1
     },
     {
         id: 2,
-        title: "Luxury Hotel in Pokhara",
-        location: "Pokhara, Nepal",
-        type: "hotel",
-        bedrooms: 20,
-        bathrooms: 25,
-        area: 50,
-        price: 25000000,
-        images: [
-            "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
-        ],
-        description: "Beautiful luxury hotel with lake view in Pokhara. Fully furnished with modern amenities.",
-        userId: 2
-    },
-    {
-        id: 3,
-        title: "Family House in Lalitpur",
-        location: "Lalitpur, Nepal",
-        type: "housing",
+        title: "Luxury Villa with Ocean View",
+        location: "Miami, FL",
+        type: "villa",
         bedrooms: 4,
         bathrooms: 3,
-        area: 8,
-        price: 12000000,
+        area: 3200,
+        price: 2500000,
         images: [
-            "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
-            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
+            "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
+            "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80"
         ],
-        description: "Spacious family house in quiet neighborhood with garden and parking space.",
-        userId: 1
+        description: "Experience luxury living in this exquisite villa featuring panoramic ocean views, a private pool, gourmet kitchen, and spacious outdoor entertaining areas perfect for enjoying the Florida sunshine.",
+        userId: 2
     }
 ];
 
 let users = [
     {
         id: 1,
-        firstName: "Ram",
-        lastName: "Sharma",
-        email: "ram@example.com",
+        firstName: "John",
+        lastName: "Doe",
+        email: "john@example.com",
         password: "password123",
-        phone: "9841000001",
-        bio: "Property developer based in Kathmandu",
-        avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
+        phone: "123-456-7890",
+        bio: "Real estate enthusiast",
+        avatar: "https://randomuser.me/api/portraits/men/1.jpg"
     },
     {
         id: 2,
-        firstName: "Sita",
-        lastName: "Gurung",
-        email: "sita@example.com",
+        firstName: "Jane",
+        lastName: "Smith",
+        email: "jane@example.com",
         password: "password123",
-        phone: "9841000002",
-        bio: "Hotel owner in Pokhara",
-        avatar: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png"
+        phone: "987-654-3210",
+        bio: "Property developer",
+        avatar: "https://randomuser.me/api/portraits/women/1.jpg"
     }
 ];
 
 let currentUser = null;
-let sortAscending = true;
-let propertyImages = [];
-let dropzone;
 
 // DOM Elements
-const featuredPropertiesContainer = document.getElementById('featured-properties-container');
-const allPropertiesContainer = document.getElementById('all-properties-container');
-const userPropertiesContainer = document.getElementById('user-properties-container');
+const propertiesContainer = document.getElementById('properties-container');
+const propertyTypeFilter = document.getElementById('property-type');
+const priceRangeFilter = document.getElementById('price-range');
+const bedroomsFilter = document.getElementById('bedrooms');
+const resetFiltersBtn = document.getElementById('reset-filters');
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-btn');
 const searchResults = document.getElementById('search-results');
 const sortPriceBtn = document.getElementById('sort-price');
-const viewAllBtn = document.getElementById('view-all-properties');
 const propertyForm = document.getElementById('property-form');
 const modal = document.getElementById('property-modal');
 const closeModal = document.querySelector('.close-modal');
@@ -102,13 +85,16 @@ const showSignup = document.getElementById('show-signup');
 const showLogin = document.getElementById('show-login');
 const authButtons = document.getElementById('auth-buttons');
 const userMenu = document.getElementById('user-menu');
-const userAvatar = document.getElementById('user-avatar');
 const logoutBtn = document.getElementById('logout-btn');
 const mobileLogoutBtn = document.getElementById('mobile-logout-btn');
 const profileForm = document.getElementById('profile-form');
 const avatarUpload = document.getElementById('avatar-upload');
 const profileAvatar = document.getElementById('profile-avatar');
-const avatarImg = document.getElementById('avatar-img');
+const userPropertiesContainer = document.getElementById('user-properties-container');
+const addPropertyLink = document.getElementById('add-property-link');
+const mobileAddPropertyLink = document.getElementById('mobile-add-property-link');
+const profileLink = document.getElementById('profile-link');
+const mobileProfileLink = document.getElementById('mobile-profile-link');
 const loginBtn = document.getElementById('login-btn');
 const signupBtn = document.getElementById('signup-btn');
 const mobileLoginBtn = document.getElementById('mobile-login-btn');
@@ -117,12 +103,17 @@ const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 const authMobile = document.getElementById('auth-mobile');
 const userMobile = document.getElementById('user-mobile');
+const avatarImg = document.getElementById('avatar-img');
+
+// State variables
+let sortAscending = true;
+let propertyImages = [];
+let dropzone;
 
 // Initialize the app
 function init() {
     setupEventListeners();
-    displayFeaturedProperties();
-    displayAllProperties();
+    displayProperties(properties);
     setupDropzone();
     checkAuthState();
 }
@@ -130,7 +121,7 @@ function init() {
 // Setup Dropzone for image uploads
 function setupDropzone() {
     dropzone = new Dropzone("#property-image-upload", {
-        url: "/fake-url",
+        url: "/fake-url", // We don't actually upload to a server
         autoProcessQueue: false,
         addRemoveLinks: true,
         maxFiles: 10,
@@ -167,76 +158,57 @@ function setupDropzone() {
     });
 }
 
-// Display featured properties (max 3)
-function displayFeaturedProperties() {
-    featuredPropertiesContainer.innerHTML = '';
+// Display properties
+function displayProperties(propertiesToDisplay) {
+    propertiesContainer.innerHTML = '';
     
-    const featuredProperties = properties.slice(0, 3);
-    
-    if (featuredProperties.length === 0) {
-        featuredPropertiesContainer.innerHTML = '<p class="no-results">No featured properties available</p>';
+    if (propertiesToDisplay.length === 0) {
+        propertiesContainer.innerHTML = '<p class="no-results">No properties match your criteria. Try adjusting your filters.</p>';
         return;
     }
     
-    featuredProperties.forEach(property => {
-        featuredPropertiesContainer.appendChild(createPropertyCard(property));
-    });
-}
-
-// Display all properties
-function displayAllProperties() {
-    allPropertiesContainer.innerHTML = '';
-    
-    if (properties.length === 0) {
-        allPropertiesContainer.innerHTML = '<p class="no-results">No properties available</p>';
-        return;
-    }
-    
-    properties.forEach(property => {
-        allPropertiesContainer.appendChild(createPropertyCard(property));
-    });
-}
-
-// Create property card element
-function createPropertyCard(property) {
-    const propertyCard = document.createElement('div');
-    propertyCard.className = 'property-card';
-    
-    propertyCard.innerHTML = `
-        <div class="property-image">
-            <img src="${property.images[0]}" alt="${property.title}">
-        </div>
-        <div class="property-info">
-            <h4>${property.title}</h4>
-            <p class="location"><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
-            <div class="property-details">
-                ${property.bedrooms ? `<span><i class="fas fa-bed"></i> ${property.bedrooms} beds</span>` : ''}
-                ${property.bathrooms ? `<span><i class="fas fa-bath"></i> ${property.bathrooms} baths</span>` : ''}
-                <span><i class="fas fa-ruler-combined"></i> ${property.area} aana</span>
+    propertiesToDisplay.forEach(property => {
+        const propertyCard = document.createElement('div');
+        propertyCard.className = 'property-card';
+        
+        propertyCard.innerHTML = `
+            <div class="property-image">
+                <img src="${property.images[0]}" alt="${property.title}">
             </div>
-            <p class="property-price">$${property.price.toLocaleString()}</p>
-            <button class="btn btn-primary view-details" data-id="${property.id}">View Details</button>
-            ${currentUser && currentUser.id === property.userId ? 
-                `<button class="delete-property" data-id="${property.id}"><i class="fas fa-trash"></i></button>` : ''}
-        </div>
-    `;
-    
-    // Add event listeners
-    propertyCard.querySelector('.view-details').addEventListener('click', (e) => {
-        const propertyId = parseInt(e.target.getAttribute('data-id'));
-        showPropertyDetails(propertyId);
+            <div class="property-info">
+                <h4>${property.title}</h4>
+                <p class="location"><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
+                <div class="property-details">
+                    <span><i class="fas fa-bed"></i> ${property.bedrooms} beds</span>
+                    <span><i class="fas fa-bath"></i> ${property.bathrooms} baths</span>
+                    <span><i class="fas fa-ruler-combined"></i> ${property.area} sqft</span>
+                </div>
+                <p class="property-price">$${property.price.toLocaleString()}</p>
+                <button class="btn btn-primary view-details" data-id="${property.id}">View Details</button>
+                ${currentUser && currentUser.id === property.userId ? 
+                    `<button class="delete-property" data-id="${property.id}"><i class="fas fa-trash"></i></button>` : ''}
+            </div>
+        `;
+        
+        propertiesContainer.appendChild(propertyCard);
     });
 
-    const deleteBtn = propertyCard.querySelector('.delete-property');
-    if (deleteBtn) {
-        deleteBtn.addEventListener('click', (e) => {
+    // Add event listeners to view details buttons
+    document.querySelectorAll('.view-details').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const propertyId = parseInt(e.target.getAttribute('data-id'));
+            showPropertyDetails(propertyId);
+        });
+    });
+
+    // Add event listeners to delete buttons
+    document.querySelectorAll('.delete-property').forEach(btn => {
+        btn.addEventListener('click', (e) => {
             const propertyId = parseInt(e.target.closest('.delete-property').getAttribute('data-id'));
             deleteProperty(propertyId);
             e.stopPropagation();
         });
-    }
-
-    return propertyCard;
+    });
 }
 
 // Show property details in modal
@@ -258,9 +230,9 @@ function showPropertyDetails(propertyId) {
                 <p class="property-detail-location"><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
                 <div class="property-detail-meta">
                     <div><i class="fas fa-home"></i> ${property.type.charAt(0).toUpperCase() + property.type.slice(1)}</div>
-                    ${property.bedrooms ? `<div><i class="fas fa-bed"></i> ${property.bedrooms} Bedrooms</div>` : ''}
-                    ${property.bathrooms ? `<div><i class="fas fa-bath"></i> ${property.bathrooms} Bathrooms</div>` : ''}
-                    <div><i class="fas fa-ruler-combined"></i> ${property.area} aana</div>
+                    <div><i class="fas fa-bed"></i> ${property.bedrooms} Bedrooms</div>
+                    <div><i class="fas fa-bath"></i> ${property.bathrooms} Bathrooms</div>
+                    <div><i class="fas fa-ruler-combined"></i> ${property.area} sqft</div>
                 </div>
                 <p class="property-detail-price">$${property.price.toLocaleString()}</p>
                 <p class="property-detail-description">${property.description || 'No description available.'}</p>
@@ -272,6 +244,7 @@ function showPropertyDetails(propertyId) {
 
     modal.style.display = 'block';
 
+    // Add event listener to edit button if it exists
     const editBtn = document.querySelector('.edit-property');
     if (editBtn) {
         editBtn.addEventListener('click', (e) => {
@@ -280,13 +253,6 @@ function showPropertyDetails(propertyId) {
             modal.style.display = 'none';
         });
     }
-}
-
-// Close modal
-function closeModalHandler() {
-    modal.style.display = 'none';
-    loginModal.style.display = 'none';
-    signupModal.style.display = 'none';
 }
 
 // Edit property
@@ -298,8 +264,8 @@ function editProperty(propertyId) {
     document.getElementById('property-title').value = property.title;
     document.getElementById('property-location').value = property.location;
     document.getElementById('property-type-select').value = property.type;
-    document.getElementById('property-bedrooms').value = property.bedrooms || '';
-    document.getElementById('property-bathrooms').value = property.bathrooms || '';
+    document.getElementById('property-bedrooms').value = property.bedrooms;
+    document.getElementById('property-bathrooms').value = property.bathrooms;
     document.getElementById('property-area').value = property.area;
     document.getElementById('property-price').value = property.price;
     document.getElementById('property-description').value = property.description;
@@ -318,14 +284,73 @@ function editProperty(propertyId) {
     document.querySelector('#add-property-section h2').textContent = 'Edit Property';
 }
 
+// Close modal
+function closeModalHandler() {
+    modal.style.display = 'none';
+    loginModal.style.display = 'none';
+    signupModal.style.display = 'none';
+}
+
+// Filter properties
+function filterProperties() {
+    const typeValue = propertyTypeFilter.value;
+    const priceValue = priceRangeFilter.value;
+    const bedroomsValue = bedroomsFilter.value;
+    const searchValue = searchInput.value.toLowerCase();
+    
+    let filteredProperties = properties;
+    
+    // Filter by search term
+    if (searchValue) {
+        filteredProperties = filteredProperties.filter(property => 
+            property.title.toLowerCase().includes(searchValue) || 
+            property.location.toLowerCase().includes(searchValue) ||
+            property.type.toLowerCase().includes(searchValue)
+        );
+    }
+    
+    // Filter by property type
+    if (typeValue !== 'all') {
+        filteredProperties = filteredProperties.filter(property => property.type === typeValue);
+    }
+    
+    // Filter by price range
+    if (priceValue !== 'all') {
+        if (priceValue === '0-200000') {
+            filteredProperties = filteredProperties.filter(property => property.price <= 200000);
+        } else if (priceValue === '200000-500000') {
+            filteredProperties = filteredProperties.filter(property => property.price > 200000 && property.price <= 500000);
+        } else if (priceValue === '500000-1000000') {
+            filteredProperties = filteredProperties.filter(property => property.price > 500000 && property.price <= 1000000);
+        } else if (priceValue === '1000000+') {
+            filteredProperties = filteredProperties.filter(property => property.price > 1000000);
+        }
+    }
+    
+    // Filter by bedrooms
+    if (bedroomsValue !== 'all') {
+        filteredProperties = filteredProperties.filter(property => property.bedrooms >= parseInt(bedroomsValue));
+    }
+    
+    displayProperties(filteredProperties);
+}
+
 // Sort properties by price
 function sortProperties() {
     const sortedProperties = [...properties];
     sortedProperties.sort((a, b) => sortAscending ? a.price - b.price : b.price - a.price);
     sortAscending = !sortAscending;
     sortPriceBtn.textContent = sortAscending ? 'Sort by Price (Low to High)' : 'Sort by Price (High to Low)';
-    properties = sortedProperties;
-    displayAllProperties();
+    displayProperties(sortedProperties);
+}
+
+// Reset filters
+function resetFilters() {
+    propertyTypeFilter.value = 'all';
+    priceRangeFilter.value = 'all';
+    bedroomsFilter.value = 'all';
+    searchInput.value = '';
+    filterProperties();
 }
 
 // Add new property
@@ -340,8 +365,8 @@ function addProperty(event) {
     const title = document.getElementById('property-title').value;
     const location = document.getElementById('property-location').value;
     const type = document.getElementById('property-type-select').value;
-    const bedrooms = document.getElementById('property-bedrooms').value ? parseInt(document.getElementById('property-bedrooms').value) : null;
-    const bathrooms = document.getElementById('property-bathrooms').value ? parseInt(document.getElementById('property-bathrooms').value) : null;
+    const bedrooms = parseInt(document.getElementById('property-bedrooms').value);
+    const bathrooms = parseInt(document.getElementById('property-bathrooms').value);
     const area = parseInt(document.getElementById('property-area').value);
     const price = parseInt(document.getElementById('property-price').value);
     const description = document.getElementById('property-description').value;
@@ -396,11 +421,10 @@ function addProperty(event) {
     propertyForm.dataset.id = '';
     document.querySelector('#add-property-section h2').textContent = 'Add New Property';
     
-    displayFeaturedProperties();
-    displayAllProperties();
-    displayUserProperties();
+    filterProperties();
     switchSection('home-section');
     
+    // Show confirmation
     alert(`Property ${propertyForm.dataset.mode === 'edit' ? 'updated' : 'added'} successfully!`);
 }
 
@@ -408,8 +432,7 @@ function addProperty(event) {
 function deleteProperty(propertyId) {
     if (confirm('Are you sure you want to delete this property?')) {
         properties = properties.filter(property => property.id !== propertyId);
-        displayFeaturedProperties();
-        displayAllProperties();
+        filterProperties();
         displayUserProperties();
     }
 }
@@ -492,7 +515,45 @@ function displayUserProperties() {
     }
     
     userProperties.forEach(property => {
-        userPropertiesContainer.appendChild(createPropertyCard(property));
+        const propertyCard = document.createElement('div');
+        propertyCard.className = 'property-card';
+        
+        propertyCard.innerHTML = `
+            <div class="property-image">
+                <img src="${property.images[0]}" alt="${property.title}">
+            </div>
+            <div class="property-info">
+                <h4>${property.title}</h4>
+                <p class="location"><i class="fas fa-map-marker-alt"></i> ${property.location}</p>
+                <div class="property-details">
+                    <span><i class="fas fa-bed"></i> ${property.bedrooms} beds</span>
+                    <span><i class="fas fa-bath"></i> ${property.bathrooms} baths</span>
+                    <span><i class="fas fa-ruler-combined"></i> ${property.area} sqft</span>
+                </div>
+                <p class="property-price">$${property.price.toLocaleString()}</p>
+                <button class="btn btn-primary view-details" data-id="${property.id}">View Details</button>
+                <button class="delete-property" data-id="${property.id}"><i class="fas fa-trash"></i></button>
+            </div>
+        `;
+        
+        userPropertiesContainer.appendChild(propertyCard);
+    });
+
+    // Add event listeners to view details buttons
+    document.querySelectorAll('.view-details').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const propertyId = parseInt(e.target.getAttribute('data-id'));
+            showPropertyDetails(propertyId);
+        });
+    });
+
+    // Add event listeners to delete buttons
+    document.querySelectorAll('.delete-property').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const propertyId = parseInt(e.target.closest('.delete-property').getAttribute('data-id'));
+            deleteProperty(propertyId);
+            e.stopPropagation();
+        });
     });
 }
 
@@ -542,9 +603,7 @@ function handleSignup(event) {
         lastName,
         email,
         password,
-        phone: '',
-        bio: '',
-        avatar: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png'
+        avatar: `https://randomuser.me/api/portraits/${Math.random() > 0.5 ? 'men' : 'women'}/${Math.floor(Math.random() * 50)}.jpg`
     };
     
     users.push(newUser);
@@ -640,12 +699,13 @@ function handleSearchInput() {
 
 // Setup event listeners
 function setupEventListeners() {
-    // Search events
+    // Filter events
+    propertyTypeFilter.addEventListener('change', filterProperties);
+    priceRangeFilter.addEventListener('change', filterProperties);
+    bedroomsFilter.addEventListener('change', filterProperties);
+    resetFiltersBtn.addEventListener('click', resetFilters);
     searchInput.addEventListener('input', handleSearchInput);
-    searchBtn.addEventListener('click', () => {
-        handleSearchInput();
-        switchSection('properties-section');
-    });
+    searchBtn.addEventListener('click', filterProperties);
     
     // Close search results when clicking outside
     document.addEventListener('click', (e) => {
@@ -656,9 +716,6 @@ function setupEventListeners() {
     
     // Sort event
     sortPriceBtn.addEventListener('click', sortProperties);
-    
-    // View all properties
-    viewAllBtn.addEventListener('click', () => switchSection('properties-section'));
     
     // Form submission
     propertyForm.addEventListener('submit', addProperty);
@@ -716,21 +773,6 @@ function setupEventListeners() {
         mobileMenu.classList.toggle('active');
     });
     
-    // Desktop profile menu
-    userAvatar.addEventListener('click', (e) => {
-        if (window.innerWidth > 768) {
-            userMenu.classList.toggle('active');
-            e.stopPropagation();
-        }
-    });
-    
-    // Close dropdown when clicking outside (desktop)
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.user-menu') && window.innerWidth > 768) {
-            userMenu.classList.remove('active');
-        }
-    });
-    
     // Check for saved theme preference
     if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
@@ -739,4 +781,4 @@ function setupEventListeners() {
 }
 
 // Initialize the app
-document.addEventListener('DOMContentLoaded', init);
+init();
