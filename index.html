@@ -26,7 +26,7 @@
             </div>
             <div class="user-menu" id="user-menu" style="display: none;">
                 <div class="user-avatar" id="user-avatar">
-                    <img src="https://via.placeholder.com/40" alt="User" id="avatar-img">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="User" id="avatar-img">
                 </div>
                 <div class="dropdown-content" id="dropdown-content">
                     <a href="#" data-section="profile">My Profile</a>
@@ -71,51 +71,28 @@
                 </div>
             </div>
 
-            <div class="filters">
-                <div class="container">
-                    <div class="filter-group">
-                        <label for="property-type">Property Type</label>
-                        <select id="property-type">
-                            <option value="all">All Types</option>
-                            <option value="house">House</option>
-                            <option value="apartment">Apartment</option>
-                            <option value="condo">Condo</option>
-                            <option value="villa">Villa</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="price-range">Price Range</label>
-                        <select id="price-range">
-                            <option value="all">Any Price</option>
-                            <option value="0-200000">$0 - $200,000</option>
-                            <option value="200000-500000">$200,000 - $500,000</option>
-                            <option value="500000-1000000">$500,000 - $1M</option>
-                            <option value="1000000+">$1M+</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="bedrooms">Bedrooms</label>
-                        <select id="bedrooms">
-                            <option value="all">Any</option>
-                            <option value="1">1+</option>
-                            <option value="2">2+</option>
-                            <option value="3">3+</option>
-                            <option value="4">4+</option>
-                        </select>
-                    </div>
-                    <button id="reset-filters" class="btn btn-secondary">Reset</button>
-                </div>
-            </div>
-
             <div class="properties">
                 <div class="container">
                     <div class="section-header">
                         <h3>Featured Properties</h3>
-                        <button id="sort-price" class="btn btn-secondary">Sort by Price</button>
+                        <button id="view-all-properties" class="btn btn-primary">View All Properties</button>
                     </div>
-                    <div class="properties-grid" id="properties-container">
-                        <!-- Properties will be loaded here by JavaScript -->
+                    <div class="properties-grid" id="featured-properties-container">
+                        <!-- Featured properties will be loaded here (max 3) -->
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Properties Section -->
+        <section id="properties-section" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h3>All Properties</h3>
+                    <button id="sort-price" class="btn btn-secondary">Sort by Price</button>
+                </div>
+                <div class="properties-grid" id="all-properties-container">
+                    <!-- All properties will be loaded here -->
                 </div>
             </div>
         </section>
@@ -137,25 +114,24 @@
                         <div class="form-group">
                             <label for="property-type-select">Type</label>
                             <select id="property-type-select" required>
-                                <option value="house">House</option>
-                                <option value="apartment">Apartment</option>
-                                <option value="condo">Condo</option>
-                                <option value="villa">Villa</option>
+                                <option value="land">Land</option>
+                                <option value="housing">Housing</option>
+                                <option value="hotel">Hotel</option>
                             </select>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="property-bedrooms">Bedrooms</label>
-                                <input type="number" id="property-bedrooms" min="1" required>
+                                <label for="property-bedrooms">Bedrooms (optional)</label>
+                                <input type="number" id="property-bedrooms" min="0">
                             </div>
                             <div class="form-group">
-                                <label for="property-bathrooms">Bathrooms</label>
-                                <input type="number" id="property-bathrooms" min="1" required>
+                                <label for="property-bathrooms">Bathrooms (optional)</label>
+                                <input type="number" id="property-bathrooms" min="0">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="property-area">Area (sqft)</label>
-                            <input type="number" id="property-area" min="100" required>
+                            <label for="property-area">Area (aana)</label>
+                            <input type="number" id="property-area" min="1" required>
                         </div>
                         <div class="form-group">
                             <label for="property-price">Price ($)</label>
@@ -190,7 +166,7 @@
                         <div class="profile-sidebar">
                             <div class="avatar-upload">
                                 <div class="avatar-preview" id="avatar-preview">
-                                    <img src="https://via.placeholder.com/150" alt="Profile" id="profile-avatar">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/1200px-Default_pfp.svg.png" alt="Profile" id="profile-avatar">
                                 </div>
                                 <div class="avatar-edit">
                                     <input type="file" id="avatar-upload" accept=".png, .jpg, .jpeg">
